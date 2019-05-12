@@ -2,13 +2,14 @@ package com.ryangrillo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ryangrillo.models.GoogleAPIData;
 import com.ryangrillo.models.WeatherData;
 import com.ryangrillo.service.APIServices;
+import com.ryangrillo.utils.MathCalculations;
 
 @RestController
 @RequestMapping(path = "/wetbulb")
@@ -18,15 +19,11 @@ public class Controller {
 	APIServices aPIServices;
 
 
-	@GetMapping("/town")
-	public WeatherData getWebBulbTemp(@RequestParam(value = "zip", required = true) String zipCode) {
+	@GetMapping("/town/{zip}")
+	public WeatherData getWebBulbTemp(@PathVariable("zip") String zipCode) {
 		GoogleAPIData googleAPIData = aPIServices.getGoogleMapsAPI(zipCode);
-		
-		String latitude = googleAPIData.getResults().get(0).getGeometry().getLocation().getLat().toString() ;
-		String longitude = googleAPIData.getResults().get(0).getGeometry().getLocation().getLng().toString();
-		
-		return aPIServices.getWeatherDataAPI(latitude, longitude);
-		
+		WeatherData weatherData = aPIServices.getWeatherDataAPI(googleAPIData);
+		return aPIServices.getWeatherDataAPI(googleAPIData);
 	}
 	    
 }

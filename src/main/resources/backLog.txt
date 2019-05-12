@@ -1,0 +1,7 @@
+exception handling
+logging
+swagger documentation
+persistence
+remap google response to only lat long
+externalize configurations
+fix access modifiers
