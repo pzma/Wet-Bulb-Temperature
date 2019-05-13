@@ -1,15 +1,11 @@
 package com.ryangrillo.utils;
 
 import java.time.Year;
+import java.util.List;
 
 public class MathCalculations {
-		
-	public static void main(String[] args) {
-		double fa = julian(2019, 5, 10) / 365.0 * 2.0 * Math.PI;
-		System.out.println("fa: " + fa);
-		System.out.println(MathCalculations.getdVar(fa));
-		System.out.println(getdVar(fa) * 0.1367e4);
-		
+	
+	private MathCalculations() {
 	}
 
 	public static final double RADEG = 180.0/Math.PI; 
@@ -42,6 +38,10 @@ public class MathCalculations {
 
 	public static double aTan2D(double y, double x) {
 		return Math.atan2(y, x) * RADEG;
+	}
+	
+	public static double getWms(double iwspd) {
+		return iwspd * 0.4474;
 	}
 	
 	public static double getnwb(double Tw, double ir, double wms) {
@@ -77,7 +77,6 @@ public class MathCalculations {
 		return Year.of(year).isLeap();
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////
 	public static double getc(double wspd) {
 		double h = 0.315;
 		return (Math.pow(wspd, 0.58) * h) / (5.3865 * Math.pow(10.0, -8.0));
@@ -112,8 +111,13 @@ public class MathCalculations {
 		return t - td;
 	}
 
-	public static double getp(double presMB) {
-		return presMB;
+	public static double getp(double slp) {
+		if (slp >= 26.0  && slp <= 34.0) {
+			return slp * 33.8639;
+		} else {
+			return 1000.0;
+		}
+		
 	}
 
 	public static double getiDwpt(double dwpt) {
@@ -169,7 +173,6 @@ public class MathCalculations {
 	
 
 	public static double getdVar(double dAlf) {
-
 		return 1.0 / ((1.0 - 9.464e-4 * Math.sin(dAlf) - 0.01671 * Math.cos(dAlf) - +1.489e-4 * Math.cos(2.0 * dAlf)
 				- 2.917e-5 * Math.sin(3.0 * dAlf) - +3.438e-4 * Math.pow(Math.cos(4.0 * dAlf), 2.0)));
 
@@ -206,8 +209,8 @@ public class MathCalculations {
 		return a * (1.0007 + 0.00000346 * p) * (6.112 * b);
 	}
 	
-	public static void geta(double td, double t) {
-		Math.exp((17.67 * (td - t)) / (td + 243.5));
+	public static double geta(double td, double t) {
+		return Math.exp((17.67 * (td - t)) / (td + 243.5));
 	}
 	
 	public static double getb(double t) {
@@ -243,8 +246,8 @@ public class MathCalculations {
 		return iCloud;
 	}
 
-	public static String getsky(String[] weather, int maxPD) {
-		return weather[maxPD];
+	public static String getsky(List<String> weather, int maxPD) {
+		return weather.get(maxPD);
 
 	}
 
@@ -252,51 +255,6 @@ public class MathCalculations {
 		return (tempLabel.equalsIgnoreCase("High")) ? 0 : 1;
 	}
 
-//	public static void calculateWetBulb(WeatherData weatherData) {
-//		String tempLabel = weatherData.getTime().getTempLabel().get(0); // high or low
-//		int maxPD = getMaxPD(tempLabel); // returns 0 or 1
-//		String tempHighOrLow = weatherData.getData().getTemperature().get(maxPD); // returns actual temp high or low ie 64 or 85
-//		int temp = getMaxTemp(tempHighOrLow);
-//		
-//	}
-//	
-//	public static int getMaxPD(String tempLabel) {//nosonar
-//		int maxPD;
-//		maxPD = (tempLabel.equalsIgnoreCase("High")) ? 0 :  1;
-//		return maxPD;
-//	}
-//	
-//	public static int getMaxTemp(String tempHighOrLow) {
-//		int maxTemp = Integer.parseInt(tempHighOrLow);
-//		int temp = 80;
-//		if (maxTemp >= 40 && maxTemp <= 130) {
-//			temp = maxTemp;
-//		}
-//		return temp;
-//	}
-//	
-//	public static double calculateHeatIndex(int temp) {
-//		double heatIndex = 0;
-//		double tempCelsius;
-//		double tempDewpointCelsius;
-//		double relativeHumidity;
-//		double a = -42.379;
-//		double b = 2.04901523 * temp;
-//		double c ;
-//		double d;
-//		double e;
-//		double f;
-//		double g;
-//		double h;
-//		double i;
-//		if(temp < 80 ) {
-//			heatIndex = temp;
-//		} else {
-//			
-//			
-//		}
-//		return heatIndex;
-//		
-//	}
+
 
 }

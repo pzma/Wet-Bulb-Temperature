@@ -18,19 +18,20 @@ import com.ryangrillo.utils.GoogleMapsApi;
 public class APIServicesImpl implements APIServices{
 
 	@Override
-	public GoogleAPIData getGoogleMapsAPI(String postalCode) {
+	public String[] getGoogleMapsAPI(String postalCode) {
 		Map<String, String> queryParam = new HashMap<>();
 		queryParam.put(Constants.POSTAL_CODE, postalCode);
 		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.getForObject(Constants.GOOGLE_MAP_API_URL, GoogleAPIData.class, queryParam);
+		GoogleAPIData googleAPIData = restTemplate.getForObject(Constants.GOOGLE_MAP_API_URL, GoogleAPIData.class, queryParam);
+		return new String[] {GoogleMapsApi.getLatitude(googleAPIData), GoogleMapsApi.getLongitude(googleAPIData)};
 		
 	}
 	
 	@Override
-	public WeatherData getWeatherDataAPI(GoogleAPIData googleAPIData) {
+	public WeatherData getWeatherDataAPI(String[] latLong) {
 		Map<String, String> queryParam = new HashMap<>();
-		queryParam.put(Constants.LATITUDE, GoogleMapsApi.getLatitude(googleAPIData));
-		queryParam.put(Constants.LONGITUDE, GoogleMapsApi.getLongitude(googleAPIData));
+		queryParam.put(Constants.LATITUDE, latLong[0]);
+		queryParam.put(Constants.LONGITUDE, latLong[1]);
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate.getForObject(Constants.WEATHER_API_URL, WeatherData.class, queryParam);
 		

@@ -5,3 +5,6 @@ persistence
 remap google response to only lat long
 externalize configurations
 fix access modifiers
+get lat longitude from user device instead of passing in and use google maps only when necessary
+add limits of when wetbulb doesn't matter
+add tests

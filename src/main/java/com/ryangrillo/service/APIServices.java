@@ -5,9 +5,7 @@ import com.ryangrillo.models.WeatherData;
 
 public interface APIServices {
 	
-	//WeatherData getWeatherDataAPI(String latitude, String longitude );
+	String[] getGoogleMapsAPI(String zipCode);
 
-	GoogleAPIData getGoogleMapsAPI(String zipCode);
-
-	WeatherData getWeatherDataAPI(GoogleAPIData googleAPIData);
+	WeatherData getWeatherDataAPI(String[] latLong);
 }
