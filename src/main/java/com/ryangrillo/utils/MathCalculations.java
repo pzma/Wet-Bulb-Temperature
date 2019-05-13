@@ -4,34 +4,38 @@ import java.time.Year;
 import java.util.List;
 
 public class MathCalculations {
-	
+
 	private MathCalculations() {
 	}
 
-	public static final double RADEG = 180.0/Math.PI; 
-	public static final double DEGRAD = Math.PI/180.0;
-	public static final double INV360 = 1.0/360.0;
+	public static final double RADEG = 180.0 / Math.PI;
+	public static final double DEGRAD = Math.PI / 180.0;
+	public static final double INV360 = 1.0 / 360.0;
 
 	public static double getWetBulbTemp(double tg, double nwb, double T) {
 		return 0.2 * tg + 0.7 * nwb + 0.1 * T;
 	}
-	
+
 	public static double getSinD(double x) {
 		return Math.sin(x * DEGRAD);
 	}
+
 	public static double getCosD(double x) {
 		return Math.cos(x * DEGRAD);
 	}
+
 	public static double getTanD(double x) {
 		return Math.tan(x * DEGRAD);
 	}
-	
+
 	public static double aTanD(double x) {
 		return Math.atan(x) * RADEG;
 	}
+
 	public static double aSinD(double x) {
 		return Math.asin(x) * RADEG;
 	}
+
 	public static double aCosD(double x) {
 		return Math.acos(x) * RADEG;
 	}
@@ -39,17 +43,17 @@ public class MathCalculations {
 	public static double aTan2D(double y, double x) {
 		return Math.atan2(y, x) * RADEG;
 	}
-	
-	public static double getWms(double iwspd) {
-		return iwspd * 0.4474;
+
+	public static double getWms(double spd) {
+		return spd * 0.4474;
 	}
-	
+
 	public static double getnwb(double Tw, double ir, double wms) {
 		double nwb = Tw + (0.0021 * ir) - (0.43 * wms) + 1.93;
-		if(nwb < Tw) {
+		if (nwb < Tw) {
 			nwb = Tw;
 		}
-		if(nwb < 50) {
+		if (nwb < 50) {
 			nwb = 50;
 		}
 		if (nwb > 85) {
@@ -61,7 +65,6 @@ public class MathCalculations {
 	public static double getTw(double Twc) {
 		return (1.8 * Twc) + 32.0;
 	}
-
 
 	public static int julian(int year, int month, int day) {
 		int[] lMonth;
@@ -111,17 +114,34 @@ public class MathCalculations {
 		return t - td;
 	}
 
-	public static double getp(double slp) {
-		if (slp >= 26.0  && slp <= 34.0) {
-			return slp * 33.8639;
-		} else {
-			return 1000.0;
+	public static double getp(String slp) {
+		double parsedSlp;
+		try {
+			parsedSlp = Double.parseDouble(slp);
+			if (parsedSlp >= 26.0 && parsedSlp <= 34.0) {
+				return parsedSlp * 33.8639;
+			} else {
+				return 1000.0;
+			}
+		} catch (NumberFormatException e) {
+			return 1000.00;
 		}
-		
+
 	}
 
-	public static double getiDwpt(double dwpt) {
-		return dwpt;
+	public static double getiDwpt(String dwpt) {
+		double dewp;
+		try {
+			dewp = Double.parseDouble(dwpt);
+			if (dewp >= 40.0 && dewp <= 130.0) {
+				return dewp;
+			} else {
+				dewp = 70.0;
+			}
+		} catch (NumberFormatException e) {
+			dewp = 70.0;
+		}
+		return dewp;
 	}
 
 	public static double getes(double t) {
@@ -140,37 +160,34 @@ public class MathCalculations {
 		double fRdecl = 0.412 * Math.cos((nJulianDate + 10.0) * 2.0 * Math.PI / fDivide - Math.PI);
 		double fDecLsc1 = getSinD(latitude) * Math.sin(fRdecl);
 		double fDecLsc2 = getCosD(latitude) * Math.cos(fRdecl);
-		double fEot = ((0.002733 -7.343*Math.sin(fA)+ .5519*Math.cos(fA) 
-				- 9.47*Math.sin(2.0*fA) - 3.02*Math.cos(2.0*fA) 
-				- 0.3289*Math.sin(3.*fA) -0.07581*Math.cos(3.0*fA) 
-				-0.1935*Math.sin(4.0*fA) -0.1245*Math.cos(4.0*fA))/ 60.0) * 15.0 * DEGRAD;
-		return new double[] {fEot, fR0r, fDecLsc1, fDecLsc2};
-		
+		double fEot = ((0.002733 - 7.343 * Math.sin(fA) + .5519 * Math.cos(fA) - 9.47 * Math.sin(2.0 * fA)
+				- 3.02 * Math.cos(2.0 * fA) - 0.3289 * Math.sin(3. * fA) - 0.07581 * Math.cos(3.0 * fA)
+				- 0.1935 * Math.sin(4.0 * fA) - 0.1245 * Math.cos(4.0 * fA)) / 60.0) * 15.0 * DEGRAD;
+		return new double[] { fEot, fR0r, fDecLsc1, fDecLsc2 };
+
 	}
-	
+
 	public static double getMaxSolarFlux(double latitude, int year, int month, int day) {
 		double edat[] = getEquationOfTime(latitude, month, year, day);
 		double fsf = (edat[2] + edat[3]) * edat[1];
 		double fSFT;
 		double fCoeff;
-		
+
 		if (fsf < 0.0) {
 			fCoeff = 0.0;
 		} else {
-			fCoeff = -1.56e-12*Math.pow(fsf,4) + 5.972e-9*Math.pow(fsf,3) - 8.364e-6*Math.pow(fsf,2) + 5.183e-3*fsf - 0.435;
+			fCoeff = -1.56e-12 * Math.pow(fsf, 4) + 5.972e-9 * Math.pow(fsf, 3) - 8.364e-6 * Math.pow(fsf, 2)
+					+ 5.183e-3 * fsf - 0.435;
 		}
-		
+
 		fSFT = fsf * fCoeff;
-		if(fSFT < 0.0) {
+		if (fSFT < 0.0) {
 			fSFT = 0.0;
 		}
-		
-		return fSFT;
-		
 
-		
+		return fSFT;
+
 	}
-	
 
 	public static double getdVar(double dAlf) {
 		return 1.0 / ((1.0 - 9.464e-4 * Math.sin(dAlf) - 0.01671 * Math.cos(dAlf) - +1.489e-4 * Math.cos(2.0 * dAlf)
@@ -182,8 +199,16 @@ public class MathCalculations {
 		return 6.11 * Math.pow(10.0, ((td * 7.5) / (td + 237.3)));
 	}
 
-	public static double getspd(double iWspd) {
-		return (iWspd < 4) ? 4 : iWspd;
+	public static double getspd(String iWspd) {
+		double wSpeed;
+		try {
+			wSpeed = Double.parseDouble(iWspd);
+			wSpeed = (wSpeed < 4) ? 4 : wSpeed;
+			return wSpeed;
+		} catch (NumberFormatException e){
+			wSpeed = 10.0;
+		}
+		return wSpeed;
 	}
 
 	public static double gettg(double maxFluxb, double c, double t) {
@@ -193,7 +218,6 @@ public class MathCalculations {
 	public static double getMaxFluxb(double maxFlux, double b1, double b2) {
 		return maxFlux * b1 + b2;
 	}
-	
 
 	public static double getb1(double fdb, double fdif) {
 		double cosz = 0.707;
@@ -204,21 +228,21 @@ public class MathCalculations {
 	public static double getb2(double ea2, double t) {
 		return ea2 * Math.pow(t, 4.0);
 	}
-	
+
 	public static double getEa(double a, double p, double b) {
 		return a * (1.0007 + 0.00000346 * p) * (6.112 * b);
 	}
-	
+
 	public static double geta(double td, double t) {
 		return Math.exp((17.67 * (td - t)) / (td + 243.5));
 	}
-	
+
 	public static double getb(double t) {
 		return Math.exp((17.502 * t) / (240.97 + t));
 	}
-	
+
 	public static double getEa2(double ea) {
-		return Math.pow(ea * 0.575, 1.0/7.0);
+		return Math.pow(ea * 0.575, 1.0 / 7.0);
 	}
 
 	public static double getfdif(double fdb) {
@@ -254,7 +278,5 @@ public class MathCalculations {
 	public static int getMaxPD(String tempLabel) {
 		return (tempLabel.equalsIgnoreCase("High")) ? 0 : 1;
 	}
-
-
 
 }
