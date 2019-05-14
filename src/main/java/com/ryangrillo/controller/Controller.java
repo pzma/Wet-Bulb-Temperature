@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ryangrillo.helpers.WetBulbTempHelper;
+import com.ryangrillo.models.InformationObect;
 import com.ryangrillo.models.LocationObject;
 import com.ryangrillo.models.WeatherData;
 import com.ryangrillo.models.WeatherObject;
@@ -31,8 +32,9 @@ public class Controller {
 		WeatherData weatherData = aPIServices.getWeatherDataAPI(latLong);
 		weatherData.getCurrentobservation().getRelh();
 		String[] results = wetBulbTempHelper.calculateWetBulb(weatherData, latLong);
-		return new WetBulbOutputVO(new LocationObject(latLong, weatherData.getLocation().getAreaDescription()), 
-				new WeatherObject(results[0], results[1], weatherData.getCurrentobservation().getRelh()));
+		return new WetBulbOutputVO(new LocationObject(latLong, weatherData.getLocation().getAreaDescription()),
+				new WeatherObject(results[0], results[1], weatherData.getCurrentobservation().getRelh()),
+				new InformationObect(null, null));
 	}
 
 }
