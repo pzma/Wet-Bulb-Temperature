@@ -14,6 +14,7 @@ import com.ryangrillo.models.WeatherData;
 import com.ryangrillo.models.WeatherObject;
 import com.ryangrillo.models.WetBulbOutputVO;
 import com.ryangrillo.service.APIServices;
+import com.ryangrillo.utils.InformationSetter;
 
 @RestController
 @RequestMapping(path = "/wetbulb")
@@ -34,7 +35,7 @@ public class Controller {
 		String[] results = wetBulbTempHelper.calculateWetBulb(weatherData, latLong);
 		return new WetBulbOutputVO(new LocationObject(latLong, weatherData.getLocation().getAreaDescription()),
 				new WeatherObject(results[0], results[1], weatherData.getCurrentobservation().getRelh()),
-				new InformationObect(null, null));
+				new InformationSetter().setInformation(results[0]));
 	}
 
 }

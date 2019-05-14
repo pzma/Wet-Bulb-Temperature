@@ -8,14 +8,12 @@ public class Light {
 	
 	private String water;
 	
-	private String alert;
 
-	public Light(String active, String rest, String water, String alert) {
+	public Light(String active, String rest, String water) {
 		super();
 		this.active = active;
 		this.rest = rest;
 		this.water = water;
-		this.alert = alert;
 	}
 
 	public String getActive() {
@@ -40,14 +38,6 @@ public class Light {
 
 	public void setWater(String water) {
 		this.water = water;
-	}
-
-	public String getAlert() {
-		return alert;
-	}
-
-	public void setAlert(String alert) {
-		this.alert = alert;
 	}
 	
 	

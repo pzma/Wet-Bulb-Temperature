@@ -8,14 +8,16 @@ public class Heavy {
 	
 	private String water;
 	
-	private String alert;
+	private boolean avoid;
 
-	public Heavy(String active, String rest, String water, String alert) {
+	
+
+	public Heavy(String active, String rest, String water, boolean avoid) {
 		super();
 		this.active = active;
 		this.rest = rest;
 		this.water = water;
-		this.alert = alert;
+		this.avoid = avoid;
 	}
 
 	public String getActive() {
@@ -42,11 +44,13 @@ public class Heavy {
 		this.water = water;
 	}
 
-	public String getAlert() {
-		return alert;
+	public boolean isAvoid() {
+		return avoid;
 	}
 
-	public void setAlert(String alert) {
-		this.alert = alert;
+	public void setAvoid(boolean avoid) {
+		this.avoid = avoid;
 	}
+
+	
 }
