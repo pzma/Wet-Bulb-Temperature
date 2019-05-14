@@ -24,7 +24,7 @@ public class Controller {
 	@Autowired
 	WetBulbTempHelper wetBulbTempHelper;
 	
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "*")
 	@GetMapping("/town/{zip}")
 	public WetBulbOutputVO getWebBulbTemp(@PathVariable("zip") String zipCode) {
 		String[] latLong = aPIServices.getGoogleMapsAPI(zipCode);
