@@ -1,5 +1,7 @@
 package com.ryangrillo.utils;
 
+import java.util.Locale.Category;
+
 import com.ryangrillo.models.Heavy;
 import com.ryangrillo.models.InformationObect;
 import com.ryangrillo.models.Light;
@@ -16,7 +18,7 @@ public class InformationSetter {
 		public static final String THIRTY = "30";
 		public static final String FORTY = "40";
 		public static final String FIFTY = "50";
-		public static final String NO_RISK = "no risk";
+		public static final String NONE = "none";
 		public static final String LOW = "low";
 		public static final String MODERATE = "moderate";
 		public static final String HIGH = "high";
@@ -31,7 +33,7 @@ public class InformationSetter {
 				Work work = new Work(new Light(FIFTY, TEN, ONE_HALF), 
 						new Moderate(FORTY, TWENTY, THREE_FOURTHS, false), 
 						new Heavy(THIRTY, THIRTY, THREE_FOURTHS, false));
-				return new InformationObect(NO_RISK, work);
+				return new InformationObect(NONE, work);
 			}
 			
 			if (wetBulbTmp >=80 && wetBulbTmp < 85) {

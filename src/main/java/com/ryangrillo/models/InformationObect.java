@@ -2,22 +2,22 @@ package com.ryangrillo.models;
 
 public class InformationObect {
 	
-	private String category;
+	private String risk;
 	
 	private Work work;
 
-	public InformationObect(String category, Work work) {
+	public InformationObect(String risk, Work work) {
 		super();
-		this.category = category;
+		this.risk = risk;
 		this.work = work;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getRisk() {
+		return risk;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setRisk(String risk) {
+		this.risk = risk;
 	}
 
 	public Work getWork() {

@@ -2,9 +2,10 @@ exception handling
 logging
 swagger documentation
 persistence
-remap google response to only lat long
+remap google response to only lat long    ********done******8
 externalize configurations     ***********done********
 fix access modifiers
 get lat longitude from user device instead of passing in and use google maps only when necessary
 add limits of when wetbulb doesn't matter
 add tests
+fix static mathCalculation class and remove helper 
