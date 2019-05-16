@@ -9,3 +9,4 @@ get lat longitude from user device instead of passing in and use google maps onl
 add limits of when wetbulb doesn't matter
 add tests
 fix static mathCalculation class and remove helper 
+change api to darksky.net

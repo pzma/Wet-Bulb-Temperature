@@ -13,5 +13,9 @@ public class GoogleMapsApi {
 	public static String getLongitude(GoogleAPIData googleAPIData) {
 		return googleAPIData.getResults().get(0).getGeometry().getLocation().getLng().toString();
 	}
+	
+	public static String[] convertLatLonStringToArray(String latlon) {
+		return latlon.split(",");	
+	}
 
 }
