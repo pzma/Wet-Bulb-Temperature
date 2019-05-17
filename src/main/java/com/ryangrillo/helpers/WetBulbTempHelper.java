@@ -2,13 +2,8 @@ package com.ryangrillo.helpers;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
-import com.ryangrillo.models.WeatherData;
 import com.ryangrillo.utils.MathCalculations;
 
 import tk.plogitech.darksky.forecast.model.Forecast;

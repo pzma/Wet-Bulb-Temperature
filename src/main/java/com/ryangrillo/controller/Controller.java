@@ -5,20 +5,16 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.maps.errors.ApiException;
 import com.ryangrillo.helpers.WetBulbTempHelper;
-import com.ryangrillo.models.InformationObect;
 import com.ryangrillo.models.LocationObject;
-import com.ryangrillo.models.WeatherData;
 import com.ryangrillo.models.WeatherObject;
 import com.ryangrillo.models.WetBulbOutputVO;
 import com.ryangrillo.service.APIServices;
-import com.ryangrillo.utils.GoogleMapsApi;
 import com.ryangrillo.utils.InformationSetter;
 import com.ryangrillo.utils.WeatherAPI;
 
