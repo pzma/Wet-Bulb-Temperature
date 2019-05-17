@@ -6,13 +6,13 @@ public class WeatherObject {
 	
 	private String temperature;
 	
-	private String relativeHumidity;
+	private String humidity;
 
-	public WeatherObject(String wetBulbGlobeTemp, String temperature, String relativeHumidity) {
+	public WeatherObject(String wetBulbGlobeTemp, String temperature, String humidity) {
 		super();
 		this.wetBulbGlobeTemp = wetBulbGlobeTemp;
 		this.temperature = temperature;
-		this.relativeHumidity = relativeHumidity;
+		this.humidity = humidity;
 	}
 
 	public String getWetBulbGlobeTemp() {
@@ -31,13 +31,14 @@ public class WeatherObject {
 		this.temperature = temperature;
 	}
 
-	public String getRelativeHumidity() {
-		return relativeHumidity;
+	public String getHumidity() {
+		return humidity;
 	}
 
-	public void setRelativeHumidity(String relativeHumidity) {
-		this.relativeHumidity = relativeHumidity;
+	public void setHumidity(String humidity) {
+		this.humidity = humidity;
 	}
+	
 	
 	
 }

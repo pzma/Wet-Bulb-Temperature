@@ -17,6 +17,10 @@ import com.ryangrillo.models.WetBulbOutputVO;
 import com.ryangrillo.service.APIServices;
 import com.ryangrillo.utils.GoogleMapsApi;
 import com.ryangrillo.utils.InformationSetter;
+import com.ryangrillo.utils.WeatherAPI;
+
+import tk.plogitech.darksky.forecast.ForecastException;
+import tk.plogitech.darksky.forecast.model.Forecast;
 
 @RestController
 @RequestMapping(path = "/location")
@@ -31,22 +35,21 @@ public class Controller {
 	@CrossOrigin(origins = "*")
 	@GetMapping
 	public WetBulbOutputVO getWebBulbTemp(@RequestParam(value = "zip", required = false) String zip, 
-										  @RequestParam(value = "latlon", required = false) String latLon) {
+										  @RequestParam(value = "latlon", required = false) String latLon) throws ForecastException {
 
 		String[] results;
 		String[] latLongArr;
-		WeatherData weatherData;
+		Forecast weatherApi;
 		if (latLon != null) {
 			latLongArr = GoogleMapsApi.convertLatLonStringToArray(latLon);
-			weatherData = aPIServices.getWeatherDataAPI(latLongArr);
-			results = wetBulbTempHelper.calculateWetBulb(weatherData, latLongArr);
 		} else {
 			latLongArr = aPIServices.getGoogleMapsAPI(zip);
-			weatherData = aPIServices.getWeatherDataAPI(latLongArr);
-			results = wetBulbTempHelper.calculateWetBulb(weatherData, latLongArr);
 		}
-		return new WetBulbOutputVO(new LocationObject(latLongArr, weatherData.getLocation().getAreaDescription()),
-				new WeatherObject(results[0], results[1], weatherData.getCurrentobservation().getRelh()),
+		weatherApi = aPIServices.getWeatherFromDarkSky(latLongArr);
+		results = wetBulbTempHelper.calculateWetBulb(null, latLongArr, weatherApi);
+		
+		return new WetBulbOutputVO(new LocationObject(latLongArr, weatherApi.getTimezone()),
+				new WeatherObject(results[0], results[1], WeatherAPI.convertDoubleToString(weatherApi.getCurrently().getHumidity()) ),
 				new InformationSetter().setInformation(results[0]));
 	}
 

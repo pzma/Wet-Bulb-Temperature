@@ -129,21 +129,6 @@ public class MathCalculations {
 
 	}
 
-	public static double getiDwpt(String dwpt) {
-		double dewp;
-		try {
-			dewp = Double.parseDouble(dwpt);
-			if (dewp >= 40.0 && dewp <= 130.0) {
-				return dewp;
-			} else {
-				dewp = 70.0;
-			}
-		} catch (NumberFormatException e) {
-			dewp = 70.0;
-		}
-		return dewp;
-	}
-
 	public static double getes(double t) {
 		return 6.11 * Math.pow(10.0, ((t * 7.5) / (t + 237.3)));
 	}
@@ -199,18 +184,6 @@ public class MathCalculations {
 		return 6.11 * Math.pow(10.0, ((td * 7.5) / (td + 237.3)));
 	}
 
-	public static double getspd(String iWspd) {
-		double wSpeed;
-		try {
-			wSpeed = Double.parseDouble(iWspd);
-			wSpeed = (wSpeed < 4) ? 4 : wSpeed;
-			return wSpeed;
-		} catch (NumberFormatException e){
-			wSpeed = 10.0;
-		}
-		return wSpeed;
-	}
-
 	public static double gettg(double maxFluxb, double c, double t) {
 		return ((maxFluxb + c * t + 7680000.0) / (c + 256000.0)) * 1.8 + 32.0;
 	}
@@ -253,26 +226,8 @@ public class MathCalculations {
 		return iCloud / 100.0;
 	}
 
-	public static double getiCloud(String sky) {
-		double iCloud;
-		if (sky.equalsIgnoreCase("Sunny")) {
-			iCloud = 0.0;
-		} else if (sky.equalsIgnoreCase("Hot") || sky.equalsIgnoreCase("Mostly Sunny")
-				|| sky.equalsIgnoreCase("Partly Cloudy")) {
-			iCloud = 20.0;
-		} else if (sky.equalsIgnoreCase("Mostly Cloudy") || sky.equalsIgnoreCase("Partly Sunny")) {
-			iCloud = 60.0;
-		} else if (sky.equalsIgnoreCase("Cloudy")) {
-			iCloud = 100.0;
-		} else {
-			iCloud = 50.0;
-		}
-		return iCloud;
-	}
-
-	public static String getsky(List<String> weather, int maxPD) {
-		return weather.get(maxPD);
-
+	public static double getiCloud(Double sky) { 
+		return sky * 100;
 	}
 
 	public static int getMaxPD(String tempLabel) {
