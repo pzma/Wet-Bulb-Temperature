@@ -40,16 +40,17 @@ public class Controller {
 		String[] results;
 		String[] latLongArr;
 		Forecast weatherApi;
+		
 		if (latLon != null) {
 			latLongArr = GoogleMapsApi.convertLatLonStringToArray(latLon);
 		} else {
 			latLongArr = aPIServices.getGoogleMapsAPI(zip);
 		}
 		weatherApi = aPIServices.getWeatherFromDarkSky(latLongArr);
-		results = wetBulbTempHelper.calculateWetBulb(null, latLongArr, weatherApi);
+		results = wetBulbTempHelper.calculateWetBulb(latLongArr, weatherApi);
 		
 		return new WetBulbOutputVO(new LocationObject(latLongArr, weatherApi.getTimezone()),
-				new WeatherObject(results[0], results[1], WeatherAPI.convertDoubleToString(weatherApi.getCurrently().getHumidity()) ),
+				new WeatherObject(results[0], results[1], WeatherAPI.convertDoubleToString(weatherApi.getCurrently().getHumidity())),
 				new InformationSetter().setInformation(results[0]));
 	}
 

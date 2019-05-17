@@ -16,7 +16,7 @@ import tk.plogitech.darksky.forecast.model.Forecast;
 @Component
 public class WetBulbTempHelper {
 
-	public String[] calculateWetBulb(WeatherData weatherData, String[] latitudeLongitudeArray, Forecast forecast) {
+	public String[] calculateWetBulb(String[] latitudeLongitudeArray, Forecast forecast) {
 		LocalDateTime calendar = LocalDateTime.now();
 		double maxFlux = MathCalculations.getMaxSolarFlux(Float.parseFloat(latitudeLongitudeArray[0]), calendar.getYear(),
 				calendar.getMonth().getValue(), calendar.getDayOfMonth());
