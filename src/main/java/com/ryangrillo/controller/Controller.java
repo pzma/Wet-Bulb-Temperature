@@ -37,18 +37,14 @@ public class Controller {
 
 	@CrossOrigin(origins = "*")
 	@GetMapping
-	public WetBulbOutputVO getWebBulbTemp(@RequestParam(value = "zip", required = false) String zip, 
-										  @RequestParam(value = "latlon", required = false) String latLon) throws ForecastException, ApiException, InterruptedException, IOException {
+	public WetBulbOutputVO getWebBulbTemp(@RequestParam(value = "zip", required = true) String zip)
+			throws ForecastException, ApiException, InterruptedException, IOException {
 
 		String[] results;
 		String[] latLongArr;
 		Forecast weatherApi;
 		
-		if (latLon != null) {
-			latLongArr = GoogleMapsApi.convertLatLonStringToArray(latLon);
-		} else {
-			latLongArr = aPIServices.getGoogleMapsAPI(zip);
-		}
+		latLongArr = aPIServices.getGoogleMapsAPI(zip);
 		weatherApi = aPIServices.getWeatherFromDarkSky(latLongArr);
 		results = wetBulbTempHelper.calculateWetBulb(latLongArr, weatherApi);
 		return new WetBulbOutputVO(new LocationObject(latLongArr, latLongArr[2]),
