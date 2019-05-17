@@ -10,3 +10,5 @@ add limits of when wetbulb doesn't matter
 add tests
 fix static mathCalculation class and remove helper 
 change api to darksky.net
+
+add google maps library for consumation: https://github.com/googlemaps/google-maps-services-java

@@ -3,12 +3,11 @@ package com.ryangrillo.constants;
 public class Constants {
 	
 	private Constants() {}	
-	
-	//API URLs
-	public static final String GOOGLE_MAP_API_URL = System.getenv("googleMapsUrl") + System.getenv("key");
-	
-	//key
+		
+	//keys
 	public static final String DARK_SKY_API_KEY= "darkSkyKey";
+	public static final String GOOGLE_MAPS_API_KEY = "key";
+	
 	//QueryParams
 	public static final String LATITUDE = "textField1";
 	public static final String LONGITUDE = "textField2";

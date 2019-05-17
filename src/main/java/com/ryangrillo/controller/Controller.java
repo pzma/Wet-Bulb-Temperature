@@ -1,5 +1,7 @@
 package com.ryangrillo.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.errors.ApiException;
 import com.ryangrillo.helpers.WetBulbTempHelper;
 import com.ryangrillo.models.InformationObect;
 import com.ryangrillo.models.LocationObject;
@@ -35,7 +38,7 @@ public class Controller {
 	@CrossOrigin(origins = "*")
 	@GetMapping
 	public WetBulbOutputVO getWebBulbTemp(@RequestParam(value = "zip", required = false) String zip, 
-										  @RequestParam(value = "latlon", required = false) String latLon) throws ForecastException {
+										  @RequestParam(value = "latlon", required = false) String latLon) throws ForecastException, ApiException, InterruptedException, IOException {
 
 		String[] results;
 		String[] latLongArr;
@@ -48,8 +51,7 @@ public class Controller {
 		}
 		weatherApi = aPIServices.getWeatherFromDarkSky(latLongArr);
 		results = wetBulbTempHelper.calculateWetBulb(latLongArr, weatherApi);
-		
-		return new WetBulbOutputVO(new LocationObject(latLongArr, weatherApi.getTimezone()),
+		return new WetBulbOutputVO(new LocationObject(latLongArr, latLongArr[2]),
 				new WeatherObject(results[0], results[1], WeatherAPI.convertDoubleToString(weatherApi.getCurrently().getHumidity())),
 				new InformationSetter().setInformation(results[0]));
 	}
