@@ -9,7 +9,5 @@ public interface APIServices {
 	
 	String[] getGoogleMapsAPI(String zipCode);
 
-	WeatherData getWeatherDataAPI(String[] latLong);
-
 	Forecast getWeatherFromDarkSky(String[] latLonArray) throws ForecastException;
 }

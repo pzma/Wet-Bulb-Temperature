@@ -41,19 +41,9 @@ public class APIServicesImpl implements APIServices{
 	}
 	
 	@Override
-	public WeatherData getWeatherDataAPI(String[] latLong) {
-		Map<String, String> queryParam = new HashMap<>();
-		queryParam.put(Constants.LATITUDE, latLong[0]);
-		queryParam.put(Constants.LONGITUDE, latLong[1]);
-		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.getForObject(Constants.WEATHER_API_URL, WeatherData.class, queryParam);
-		
-	}
-	
-	@Override
 	public Forecast getWeatherFromDarkSky(String[] latLonArray) throws ForecastException {
 		ForecastRequest request = new ForecastRequestBuilder()
-		        .key(new APIKey(System.getenv("darkSkyKey"))).language(Language.en).units(Units.auto)
+		        .key(new APIKey(System.getenv(Constants.DARK_SKY_API_KEY))).language(Language.en).units(Units.auto)
 		        .location(new GeoCoordinates(new Longitude(Double.parseDouble(latLonArray[1])), new Latitude(Double.parseDouble(latLonArray[0])))).build();
 		DarkSkyJacksonClient client = new DarkSkyJacksonClient();
 	    return client.forecast(request);
