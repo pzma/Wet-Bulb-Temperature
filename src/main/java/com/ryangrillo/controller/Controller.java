@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.maps.errors.ApiException;
+import com.google.maps.model.LatLng;
 import com.ryangrillo.helpers.WetBulbTempHelper;
 import com.ryangrillo.models.LocationObject;
 import com.ryangrillo.models.WeatherObject;
 import com.ryangrillo.models.WetBulbOutputVO;
 import com.ryangrillo.service.APIServices;
+import com.ryangrillo.utils.GoogleMapsApi;
 import com.ryangrillo.utils.InformationSetter;
 import com.ryangrillo.utils.WeatherAPI;
 
@@ -33,17 +35,23 @@ public class Controller {
 
 	@CrossOrigin(origins = "*")
 	@GetMapping
-	public WetBulbOutputVO getWebBulbTemp(@RequestParam(value = "zip", required = true) String zip)
+	public WetBulbOutputVO getWebBulbTemp(
+			@RequestParam(value = "zip", required = false) String zip, 
+			@RequestParam(value="latlon", required = false) String latLon)
 			throws ForecastException, ApiException, InterruptedException, IOException {
 
 		String[] results;
-		String[] latLongArr;
+		String[] resultsArr;
 		Forecast weatherApi;
 		
-		latLongArr = aPIServices.getGoogleMapsAPI(zip);
-		weatherApi = aPIServices.getWeatherFromDarkSky(latLongArr);
-		results = wetBulbTempHelper.calculateWetBulb(latLongArr, weatherApi);
-		return new WetBulbOutputVO(new LocationObject(latLongArr, latLongArr[2]),
+		if(latLon != null ) {
+			resultsArr = aPIServices.getGoogleMapsApiUsingLatLon(latLon);
+		} else {
+			resultsArr = aPIServices.getGoogleMapsAPIUsingZip(zip);
+		}
+		weatherApi = aPIServices.getWeatherFromDarkSky(resultsArr);
+		results = wetBulbTempHelper.calculateWetBulb(resultsArr, weatherApi);
+		return new WetBulbOutputVO(new LocationObject(resultsArr, resultsArr[2]),
 				new WeatherObject(results[0], results[1], WeatherAPI.convertDoubleToString(weatherApi.getCurrently().getHumidity())),
 				new InformationSetter().setInformation(results[0]));
 	}

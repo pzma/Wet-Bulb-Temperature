@@ -8,7 +8,9 @@ import tk.plogitech.darksky.forecast.model.Forecast;
 
 public interface APIServices {
 	
-	String[] getGoogleMapsAPI(String zipCode) throws ApiException, InterruptedException, IOException;
-
 	Forecast getWeatherFromDarkSky(String[] latLonArray) throws ForecastException;
+
+	String[] getGoogleMapsAPIUsingZip(String postalCode) throws ApiException, InterruptedException, IOException;
+
+	String[] getGoogleMapsApiUsingLatLon(String latLon) throws ApiException, InterruptedException, IOException;
 }
